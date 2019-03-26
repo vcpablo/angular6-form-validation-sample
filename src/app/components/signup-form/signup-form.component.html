@@ -1,0 +1,67 @@
+
+<h3 class="card-title">Signup</h3>
+<form #signUpForm="ngForm" (ngSubmit)="submit(signUpForm)">
+    <div class="form-group">
+        <label>Username</label>
+        <input name="username" ngModel class="form-control" required #username="ngModel">
+        <div class="form-error form-username-error" *ngIf="username.errors?.required && (submitted || username.touched || username.dirty)">
+            This username is not available
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input name="email" ngModel type="email" fieldmatches class="form-control" required #email="ngModel">
+        <div class="form-error form-email-error" *ngIf="email.errors && (submitted || email.touched || email.dirty)">
+            This is not correct email
+        </div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input name="password" ngModel type="password" fieldmatches class="form-control" required #password="ngModel">
+      <div class="form-error form-password-error" *ngIf="password.errors && (submitted || password.touched || password.dirty)">
+        Password should have at least 8 characters including one uppercase, one lowercase and one number
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Repeat Password</label>
+      <input name="password_match" ngModel [fieldmatches]="password" type="password" class="form-control" required #password_match="ngModel">
+      <div class="form-error form-password_match-error" *ngIf="password_match.errors?.password_match && (password_match.dirty || password_match.touched)">
+          Passwords should match
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input name="phoneNumber" ngModel type="tel" fieldmatches
+       class="form-control" required #phoneNumber="ngModel">
+      <div class="form-error form-phonenumber-error" *ngIf="phoneNumber.invalid && (submitted || phoneNumber.touched || phoneNumber.dirty)">
+          This phone number is invalid. Valid format is (999) 999-9999
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Country</label>
+      <select name="country" ngModel class="form-control" required #country="ngModel" (change)="loadStateByCountryId($event.target.value)">
+          <option value="">--Select Country--</option>
+          <option *ngFor="let country of countries" [value]="country.id">
+            {{ country.name }}
+          </option>
+      </select>
+      <div class="form-error form-country-error" *ngIf="country.invalid && (submitted || country.touched || country.dirty)">
+          This country is not available
+      </div>
+    </div>
+    <div class="form-group">
+      <label>State</label>
+      <select name="state" ngModel class="form-control" required #state="ngModel">
+          <option value="">--Select State--</option>
+          <option *ngFor="let state of states" [value]="state.id">
+            {{ state.name }}
+          </option>
+      </select>
+      <div class="form-error form-state-error" *ngIf="state.invalid && (submitted || state.touched || state.dirty)">
+          This state is not available
+      </div>
+  </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+    </div>
+</form>
